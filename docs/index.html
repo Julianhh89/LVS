@@ -1,28 +1,919 @@
-🎓 LVS - Learning Verification System
-Sistema de Verificación de Aprendizaje
-
-🏠 Inicio
-🎬 Demo
-⚙️ Cómo Funciona
-📤 Probar Sistema
-¿Qué es LVS?
-💡 Cambio de Paradigma:
-No preguntamos "¿Copiaste?", preguntamos "¿Aprendiste?"
-LVS (Learning Verification System) es un sistema revolucionario que evalúa comprensión real en lugar de detectar fraude.
-
-✅ Para Estudiantes
-Trabaja como quieras (equipo, IA, internet)
-Demuestra tu comprensión
-Recibe feedback constructivo
-Aprende de verdad
-✅ Para Profesores
-Evaluación automatizada con IA
-95% menos tiempo
-Reportes detallados
-Insights pedagógicos
-🎯 Principio Fundamental
-"No importa CÓMO hiciste el trabajo, importa QUÉ aprendiste de él"
-
-🎓 Learning Verification System (LVS) - 2026
-
-Sistema de Verificación de Aprendizaje
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LVS - Sistema de Verificación de Aprendizaje</title>
+    
+    <!-- 
+    ========================================================================
+    ¿QUÉ ES ESTO?
+    Este es el <head> del documento. Aquí va información SOBRE la página,
+    no lo que se muestra en la página.
+    
+    - <meta charset="UTF-8">: Permite usar caracteres especiales (ñ, á, etc.)
+    - <meta name="viewport">: Hace que la página se vea bien en móviles
+    - <title>: El texto que aparece en la pestaña del navegador
+    ========================================================================
+    -->
+    
+    <style>
+        /* 
+        ========================================================================
+        ¿QUÉ ES CSS?
+        CSS = Cascading Style Sheets = "Hojas de Estilo en Cascada"
+        
+        Es el lenguaje que le da ESTILO a la página:
+        - Colores
+        - Tamaños de texto
+        - Posiciones de elementos
+        - Animaciones
+        
+        Piensa en CSS como la "ropa" que le pones a tu página web.
+        HTML es el esqueleto, CSS es la ropa.
+        ========================================================================
+        */
+        
+        /* Resetear estilos por defecto del navegador */
+        * {
+            margin: 0;           /* Quitar márgenes */
+            padding: 0;          /* Quitar espaciado interno */
+            box-sizing: border-box;  /* Hacer cálculos de tamaño más predecibles */
+        }
+        
+        /* Variables CSS: colores reutilizables en toda la página */
+        :root {
+            /* :root es como una "caja de herramientas" donde guardamos valores */
+            --color-primario: #2563eb;      /* Azul principal */
+            --color-secundario: #1e40af;    /* Azul más oscuro */
+            --color-fondo: #f8fafc;         /* Gris muy claro para el fondo */
+            --color-texto: #1e293b;         /* Gris oscuro para texto */
+            --color-exito: #10b981;         /* Verde */
+            --color-advertencia: #f59e0b;   /* Naranja */
+        }
+        
+        /* Estilo del body (todo el documento) */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            /* font-family: tipo de letra. Usamos fuentes del sistema para cargar rápido */
+            
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            /* background: fondo con degradado (gradient) de azul a morado */
+            
+            min-height: 100vh;  /* vh = viewport height = alto de la ventana */
+            /* min-height: 100vh hace que ocupe toda la pantalla mínimo */
+            
+            padding: 20px;
+            color: var(--color-texto);  /* Usar el color de texto definido arriba */
+        }
+        
+        /* Contenedor principal */
+        .container {
+            max-width: 1200px;    /* Máximo 1200 píxeles de ancho */
+            margin: 0 auto;       /* margin: 0 auto; = centrar horizontalmente */
+            background: white;
+            border-radius: 20px;  /* border-radius = esquinas redondeadas */
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);  /* Sombra */
+            overflow: hidden;     /* Ocultar lo que se salga del contenedor */
+        }
+        
+        /* Header (cabecera) */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;      /* Espacio interno de 40 píxeles */
+            text-align: center; /* Centrar el texto */
+        }
+        
+        header h1 {
+            font-size: 36px;    /* Tamaño de letra */
+            margin-bottom: 10px;
+            font-weight: 700;   /* Grosor de la letra (700 = negrita) */
+        }
+        
+        header p {
+            font-size: 18px;
+            opacity: 0.9;       /* opacity = transparencia (1 = opaco, 0 = invisible) */
+        }
+        
+        /* Área de contenido principal */
+        .content {
+            padding: 40px;
+        }
+        
+        /* Secciones */
+        .section {
+            margin-bottom: 40px;
+            display: none;  /* Ocultar por defecto, mostraremos con JavaScript */
+        }
+        
+        .section.active {
+            display: block;  /* Mostrar la sección activa */
+            animation: fadeIn 0.5s;  /* Animación al aparecer */
+        }
+        
+        /* Definir la animación fadeIn */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        /* 
+        ¿Qué hace esto? Cuando algo aparece, empieza invisible (opacity: 0)
+        y 20px más abajo (translateY(20px)), y termina visible y en su posición.
+        Esto crea un efecto de "aparecer suavemente desde abajo"
+        */
+        
+        /* Tarjetas */
+        .card {
+            background: #f8fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;  /* Transición suave al cambiar */
+        }
+        
+        .card:hover {
+            transform: translateY(-4px);  /* Levantar 4px al pasar el mouse */
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+        
+        /* Botones */
+        .btn {
+            background: var(--color-primario);
+            color: white;
+            border: none;
+            padding: 12px 32px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;  /* Cambiar cursor a "manita" al pasar encima */
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: var(--color-secundario);
+            transform: translateY(-2px);  /* Subir al hacer hover */
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        
+        .btn:active {
+            transform: translateY(0);  /* Volver a la posición al hacer clic */
+        }
+        
+        .btn-secondary {
+            background: #6b7280;
+        }
+        
+        .btn-secondary:hover {
+            background: #4b5563;
+        }
+        
+        /* Zona de subida de archivos */
+        .upload-zone {
+            border: 3px dashed var(--color-primario);
+            border-radius: 12px;
+            padding: 60px 20px;
+            text-align: center;
+            background: #eff6ff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .upload-zone:hover {
+            background: #dbeafe;
+            border-color: var(--color-secundario);
+        }
+        
+        .upload-zone.dragover {
+            background: #bfdbfe;
+            border-color: var(--color-secundario);
+        }
+        
+        /* Inputs de texto */
+        input[type="text"],
+        input[type="email"],
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 16px;
+            font-family: inherit;
+            margin-bottom: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus,
+        textarea:focus {
+            outline: none;  /* Quitar el borde azul por defecto */
+            border-color: var(--color-primario);
+        }
+        
+        textarea {
+            resize: vertical;  /* Permitir cambiar tamaño solo verticalmente */
+            min-height: 100px;
+        }
+        
+        /* Labels (etiquetas de formularios) */
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--color-texto);
+        }
+        
+        /* Badges (etiquetas pequeñas) */
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .badge-info {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+        
+        .badge-success {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        /* Grid (cuadrícula) para layouts */
+        .grid {
+            display: grid;  /* display: grid = usar sistema de cuadrícula */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            /* Esto crea columnas automáticamente que se ajustan al espacio */
+            gap: 20px;  /* Espacio entre elementos */
+        }
+        
+        /* Lista de pasos */
+        .steps {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .step {
+            display: flex;  /* display: flex = usar flexbox para alinear */
+            align-items: center;  /* Centrar verticalmente */
+            padding: 16px;
+            margin-bottom: 12px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--color-primario);
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: var(--color-primario);
+            color: white;
+            border-radius: 50%;  /* Hacer círculo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            margin-right: 16px;
+            flex-shrink: 0;  /* No permitir que se encoja */
+        }
+        
+        /* Barra de navegación de pestañas */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .tab {
+            padding: 12px 24px;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            color: #6b7280;
+            transition: all 0.3s ease;
+        }
+        
+        .tab.active {
+            color: var(--color-primario);
+            border-bottom-color: var(--color-primario);
+        }
+        
+        .tab:hover {
+            color: var(--color-secundario);
+        }
+        
+        /* Alertas */
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .alert-info {
+            background: #dbeafe;
+            color: #1e40af;
+            border-left: 4px solid #2563eb;
+        }
+        
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+        
+        /* Footer */
+        footer {
+            background: #1e293b;
+            color: white;
+            text-align: center;
+            padding: 24px;
+        }
+        
+        /* Responsive: ajustar para móviles */
+        @media (max-width: 768px) {
+            /* @media = reglas que solo aplican en ciertas condiciones */
+            /* max-width: 768px = cuando la pantalla es menor a 768px (móviles) */
+            
+            .container {
+                border-radius: 0;  /* Sin esquinas redondeadas en móvil */
+            }
+            
+            header h1 {
+                font-size: 28px;
+            }
+            
+            .content {
+                padding: 20px;
+            }
+            
+            .tabs {
+                flex-direction: column;  /* Pestañas en vertical en móvil */
+            }
+        }
+        
+        /* Ocultar elementos */
+        .hidden {
+            display: none !important;  /* !important = forzar esta regla */
+        }
+        
+        /* Loading spinner (círculo giratorio de carga) */
+        .spinner {
+            border: 4px solid #f3f4f6;
+            border-top: 4px solid var(--color-primario);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+    ========================================================================
+    ¿QUÉ ES HTML?
+    HTML = HyperText Markup Language = "Lenguaje de Marcado de Hipertexto"
+    
+    Es el lenguaje que define la ESTRUCTURA de la página:
+    - Títulos
+    - Párrafos
+    - Botones
+    - Imágenes
+    - etc.
+    
+    Piensa en HTML como el "esqueleto" de tu página web.
+    ========================================================================
+    -->
+    
+    <!-- HEADER: La cabecera de la página -->
+    <header>
+        <h1>🎓 LVS - Learning Verification System</h1>
+        <p>Sistema de Verificación de Aprendizaje</p>
+    </header>
+    
+    <!-- CONTAINER: Contenedor principal -->
+    <div class="container">
+        
+        <!-- TABS: Pestañas de navegación -->
+        <div class="content">
+            <div class="tabs">
+                <!-- onclick="mostrarSeccion('inicio')" = cuando hagan clic, ejecutar función -->
+                <button class="tab active" onclick="mostrarSeccion('inicio')">
+                    🏠 Inicio
+                </button>
+                <button class="tab" onclick="mostrarSeccion('demo')">
+                    🎬 Demo
+                </button>
+                <button class="tab" onclick="mostrarSeccion('como-funciona')">
+                    ⚙️ Cómo Funciona
+                </button>
+                <button class="tab" onclick="mostrarSeccion('subir')">
+                    📤 Probar Sistema
+                </button>
+            </div>
+            
+            <!-- SECCIÓN 1: INICIO -->
+            <div id="inicio" class="section active">
+                <h2 style="font-size: 32px; margin-bottom: 16px;">
+                    ¿Qué es LVS?
+                </h2>
+                
+                <div class="alert alert-info">
+                    <strong>💡 Cambio de Paradigma:</strong><br>
+                    No preguntamos "¿Copiaste?", preguntamos "¿Aprendiste?"
+                </div>
+                
+                <p style="font-size: 18px; line-height: 1.8; margin-bottom: 24px;">
+                    <strong>LVS</strong> (Learning Verification System) es un sistema revolucionario 
+                    que evalúa <strong>comprensión real</strong> en lugar de detectar fraude.
+                </p>
+                
+                <div class="grid">
+                    <div class="card">
+                        <h3 style="color: var(--color-primario); margin-bottom: 12px;">
+                            ✅ Para Estudiantes
+                        </h3>
+                        <ul style="line-height: 2;">
+                            <li>Trabaja como quieras (equipo, IA, internet)</li>
+                            <li>Demuestra tu comprensión</li>
+                            <li>Recibe feedback constructivo</li>
+                            <li>Aprende de verdad</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card">
+                        <h3 style="color: var(--color-primario); margin-bottom: 12px;">
+                            ✅ Para Profesores
+                        </h3>
+                        <ul style="line-height: 2;">
+                            <li>Evaluación automatizada con IA</li>
+                            <li>95% menos tiempo</li>
+                            <li>Reportes detallados</li>
+                            <li>Insights pedagógicos</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 32px; padding: 24px; background: #eff6ff; border-radius: 12px;">
+                    <h3 style="margin-bottom: 16px;">🎯 Principio Fundamental</h3>
+                    <p style="font-size: 18px; font-style: italic;">
+                        "No importa <strong>CÓMO</strong> hiciste el trabajo, 
+                        importa <strong>QUÉ</strong> aprendiste de él"
+                    </p>
+                </div>
+            </div>
+            
+            <!-- SECCIÓN 2: DEMO -->
+            <div id="demo" class="section">
+                <h2 style="font-size: 32px; margin-bottom: 24px;">
+                    🎬 Demostración Interactiva
+                </h2>
+                
+                <div class="alert alert-info">
+                    Esta es una simulación del flujo completo del sistema
+                </div>
+                
+                <div id="demo-steps">
+                    <!-- Los pasos se generarán con JavaScript -->
+                </div>
+                
+                <button class="btn" onclick="iniciarDemo()">
+                    ▶️ Iniciar Demostración
+                </button>
+            </div>
+            
+            <!-- SECCIÓN 3: CÓMO FUNCIONA -->
+            <div id="como-funciona" class="section">
+                <h2 style="font-size: 32px; margin-bottom: 24px;">
+                    ⚙️ ¿Cómo Funciona el Sistema?
+                </h2>
+                
+                <ul class="steps">
+                    <li class="step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <strong>Estudiante Entrega Trabajo</strong><br>
+                            <span style="color: #6b7280;">
+                                Sin restricciones. Puede usar IA, trabajar en equipo, consultar internet.
+                            </span>
+                        </div>
+                    </li>
+                    
+                    <li class="step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <strong>IA Analiza el Documento</strong><br>
+                            <span style="color: #6b7280;">
+                                Claude Sonnet 4 extrae conceptos clave y analiza profundidad.
+                            </span>
+                        </div>
+                    </li>
+                    
+                    <li class="step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <strong>Generación de Preguntas Personalizadas</strong><br>
+                            <span style="color: #6b7280;">
+                                5-10 preguntas únicas basadas en el trabajo específico del estudiante.
+                            </span>
+                        </div>
+                    </li>
+                    
+                    <li class="step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <strong>Evaluación Oral (15 minutos)</strong><br>
+                            <span style="color: #6b7280;">
+                                Conversación natural grabada en video donde el estudiante demuestra comprensión.
+                            </span>
+                        </div>
+                    </li>
+                    
+                    <li class="step">
+                        <div class="step-number">5</div>
+                        <div>
+                            <strong>IA Evalúa Respuestas</strong><br>
+                            <span style="color: #6b7280;">
+                                Análisis en múltiples dimensiones: precisión, profundidad, originalidad, coherencia.
+                            </span>
+                        </div>
+                    </li>
+                    
+                    <li class="step">
+                        <div class="step-number">6</div>
+                        <div>
+                            <strong>Calificación + Feedback</strong><br>
+                            <span style="color: #6b7280;">
+                                Score 0-100 con retroalimentación constructiva y recursos recomendados.
+                            </span>
+                        </div>
+                    </li>
+                </ul>
+                
+                <div class="card" style="margin-top: 32px; background: #f0fdf4;">
+                    <h3 style="color: var(--color-exito); margin-bottom: 12px;">
+                        🎯 Fórmula de Calificación
+                    </h3>
+                    <p style="font-size: 18px;">
+                        <strong>Calificación Final = </strong><br>
+                        (Calidad Documento × 30%) + (Comprensión Demostrada × 70%)
+                    </p>
+                    <p style="margin-top: 12px; color: #065f46;">
+                        <strong>La comprensión pesa más del doble que el documento</strong>
+                    </p>
+                </div>
+            </div>
+            
+            <!-- SECCIÓN 4: PROBAR SISTEMA -->
+            <div id="subir" class="section">
+                <h2 style="font-size: 32px; margin-bottom: 24px;">
+                    📤 Probar el Sistema
+                </h2>
+                
+                <div class="alert alert-info">
+                    <strong>ℹ️ Demo Simulada:</strong> Esta es una versión de demostración.
+                    El sistema real requiere backend con IA.
+                </div>
+                
+                <!-- Formulario de estudiante -->
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">👤 Información del Estudiante</h3>
+                    
+                    <label for="nombre">Nombre Completo</label>
+                    <input type="text" id="nombre" placeholder="Ej: Ana López">
+                    
+                    <label for="email">Email</label>
+                    <input type="email" id="email" placeholder="estudiante@universidad.edu">
+                    
+                    <label for="curso">Curso</label>
+                    <input type="text" id="curso" placeholder="Ej: Ciencias Ambientales">
+                </div>
+                
+                <!-- Zona de subida -->
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">📄 Subir Trabajo</h3>
+                    
+                    <div class="upload-zone" id="uploadZone" onclick="document.getElementById('fileInput').click()">
+                        <div style="font-size: 48px; margin-bottom: 16px;">📄</div>
+                        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">
+                            Haz clic para seleccionar tu archivo
+                        </div>
+                        <div style="color: #6b7280; font-size: 14px;">
+                            o arrastra y suelta aquí
+                        </div>
+                        <div style="color: #6b7280; font-size: 12px; margin-top: 8px;">
+                            PDF, DOCX, TXT (máx. 10MB)
+                        </div>
+                    </div>
+                    
+                    <input type="file" id="fileInput" style="display: none;" accept=".pdf,.docx,.txt" onchange="manejarArchivo(event)">
+                    
+                    <div id="archivoSeleccionado" class="hidden" style="margin-top: 16px;">
+                        <div class="alert alert-success">
+                            <strong>✅ Archivo seleccionado:</strong>
+                            <span id="nombreArchivo"></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Información adicional -->
+                <div class="card">
+                    <h3 style="margin-bottom: 16px;">📋 Información Adicional (Opcional)</h3>
+                    
+                    <label for="metodo">¿Cómo realizaste este trabajo?</label>
+                    <textarea id="metodo" placeholder="Ej: Trabajé con 2 compañeros, usamos ChatGPT para investigar, consulté 3 artículos científicos..."></textarea>
+                    
+                    <div style="color: #6b7280; font-size: 14px; font-style: italic;">
+                        💡 No hay penalización por usar IA o trabajar en equipo. Solo evaluamos si aprendiste.
+                    </div>
+                </div>
+                
+                <button class="btn" onclick="simularEntrega()">
+                    ✅ Entregar y Continuar a Evaluación
+                </button>
+                
+                <div id="resultadoEntrega" class="hidden"></div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <!-- FOOTER -->
+    <footer>
+        <p>🎓 Learning Verification System (LVS) - 2026</p>
+        <p style="margin-top: 8px; opacity: 0.8;">
+            Sistema de Verificación de Aprendizaje
+        </p>
+    </footer>
+    
+    <!-- 
+    ========================================================================
+    JAVASCRIPT
+    
+    ¿Qué es JavaScript?
+    Es el lenguaje que hace la página INTERACTIVA:
+    - Responder a clics
+    - Mostrar/ocultar elementos
+    - Hacer animaciones
+    - Comunicarse con servidores
+    
+    HTML = Esqueleto
+    CSS = Ropa/Apariencia
+    JavaScript = Músculos/Movimiento
+    ========================================================================
+    -->
+    
+    <script>
+        /*
+        ========================================================================
+        FUNCIONES BÁSICAS
+        ========================================================================
+        */
+        
+        /**
+         * Función: mostrarSeccion
+         * ¿Qué hace? Muestra una sección y oculta las demás
+         * ¿Cómo? Agrega/quita la clase "active"
+         */
+        function mostrarSeccion(nombreSeccion) {
+            // Obtener todas las secciones
+            const secciones = document.querySelectorAll('.section');
+            // document.querySelectorAll = buscar todos los elementos que coincidan
+            
+            // Ocultar todas las secciones
+            secciones.forEach(seccion => {
+                seccion.classList.remove('active');
+                // classList.remove = quitar una clase CSS
+            });
+            
+            // Mostrar la sección seleccionada
+            document.getElementById(nombreSeccion).classList.add('active');
+            // getElementById = buscar elemento por su id
+            // classList.add = agregar una clase CSS
+            
+            // Actualizar pestañas
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach((tab, index) => {
+                tab.classList.remove('active');
+            });
+            
+            // Marcar pestaña activa
+            event.target.classList.add('active');
+            // event.target = el elemento que disparó el evento (el botón clickeado)
+        }
+        
+        /**
+         * Función: iniciarDemo
+         * ¿Qué hace? Simula el flujo del sistema paso a paso
+         */
+        function iniciarDemo() {
+            const container = document.getElementById('demo-steps');
+            container.innerHTML = '<div class="spinner"></div>';
+            // innerHTML = cambiar el contenido HTML de un elemento
+            
+            // Simular carga
+            setTimeout(() => {
+                // setTimeout = ejecutar algo después de X milisegundos
+                // 1000 ms = 1 segundo
+                
+                container.innerHTML = `
+                    <div class="card">
+                        <h3>📝 Paso 1: Estudiante Entrega Trabajo</h3>
+                        <p style="margin-top: 8px;">
+                            <strong>Estudiante:</strong> Ana López<br>
+                            <strong>Asignación:</strong> Ensayo sobre Cambio Climático<br>
+                            <strong>Método:</strong> Trabajé con compañeros, usé ChatGPT<br>
+                            <span class="badge badge-success">✅ Entregado</span>
+                        </p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>🤖 Paso 2: IA Analiza Documento</h3>
+                        <p style="margin-top: 8px;">
+                            <strong>Conceptos identificados:</strong> Acidificación oceánica, 
+                            blanqueamiento coral, deforestación de manglares<br>
+                            <strong>Nivel de profundidad:</strong> Intermedio-Avanzado
+                        </p>
+                    </div>
+                    
+                    <div class="card">
+                        <h3>❓ Paso 3: Preguntas Generadas</h3>
+                        <ul style="margin-top: 12px; line-height: 2;">
+                            <li><strong>P1 [Explicación]:</strong> Explica por qué la acidificación oceánica amenaza a los corales</li>
+                            <li><strong>P2 [Aplicación]:</strong> ¿Cómo aplicarías estos conceptos a un caso real?</li>
+                            <li><strong>P3 [Análisis]:</strong> ¿Qué es más urgente: emisiones o reforestación?</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="card" style="background: #f0fdf4;">
+                        <h3>🎯 Paso 4-6: Evaluación y Resultado</h3>
+                        <div style="font-size: 48px; text-align: center; margin: 20px 0;">
+                            85/100
+                        </div>
+                        <p style="text-align: center; font-weight: 600; color: var(--color-exito);">
+                            Nivel: EXCELENTE
+                        </p>
+                        <ul style="margin-top: 16px; line-height: 2;">
+                            <li>✅ <strong>Fortaleza:</strong> Comprensión sólida de conceptos</li>
+                            <li>✅ <strong>Fortaleza:</strong> Ejemplos originales creativos</li>
+                            <li>🎯 <strong>Mejora:</strong> Profundizar en mecanismos bioquímicos</li>
+                        </ul>
+                    </div>
+                `;
+            }, 1500);
+        }
+        
+        /**
+         * Función: manejarArchivo
+         * ¿Qué hace? Se ejecuta cuando el usuario selecciona un archivo
+         */
+        function manejarArchivo(event) {
+            const archivo = event.target.files[0];
+            // event.target.files[0] = primer archivo seleccionado
+            
+            if (archivo) {
+                // Mostrar nombre del archivo
+                document.getElementById('archivoSeleccionado').classList.remove('hidden');
+                document.getElementById('nombreArchivo').textContent = archivo.name;
+                // textContent = cambiar el texto de un elemento
+            }
+        }
+        
+        /**
+         * Función: simularEntrega
+         * ¿Qué hace? Simula la entrega de un trabajo
+         */
+        function simularEntrega() {
+            // Validar que haya archivo
+            const archivo = document.getElementById('fileInput').files[0];
+            const nombre = document.getElementById('nombre').value;
+            
+            // value = obtener el valor de un input
+            
+            if (!archivo) {
+                alert('Por favor selecciona un archivo');
+                // alert = mostrar una ventana emergente
+                return; // return = salir de la función
+            }
+            
+            if (!nombre) {
+                alert('Por favor ingresa tu nombre');
+                return;
+            }
+            
+            // Mostrar spinner
+            const resultado = document.getElementById('resultadoEntrega');
+            resultado.classList.remove('hidden');
+            resultado.innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <div class="spinner"></div>
+                    <p style="margin-top: 16px;">Procesando entrega...</p>
+                </div>
+            `;
+            
+            // Simular procesamiento
+            setTimeout(() => {
+                resultado.innerHTML = `
+                    <div class="alert alert-success">
+                        <h3 style="margin-bottom: 12px;">🎉 ¡Trabajo Entregado Exitosamente!</h3>
+                        <p><strong>Estudiante:</strong> ${nombre}</p>
+                        <p><strong>Archivo:</strong> ${archivo.name}</p>
+                        <p style="margin-top: 16px;">
+                            ✅ Tu documento ha sido analizado<br>
+                            ✅ Se han generado 8 preguntas personalizadas<br>
+                            ✅ Tu evaluación oral está lista
+                        </p>
+                        <div style="margin-top: 24px;">
+                            <button class="btn">
+                                ▶️ Iniciar Evaluación de Comprensión
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                // Scroll al resultado
+                resultado.scrollIntoView({ behavior: 'smooth' });
+                // scrollIntoView = hacer scroll hasta un elemento
+            }, 2000);
+        }
+        
+        /*
+        ========================================================================
+        DRAG AND DROP (arrastrar y soltar)
+        ========================================================================
+        */
+        
+        const uploadZone = document.getElementById('uploadZone');
+        
+        // Prevenir comportamiento por defecto del navegador
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                // preventDefault = prevenir la acción por defecto
+                e.stopPropagation();
+                // stopPropagation = evitar que el evento se propague
+            });
+        });
+        
+        // Resaltar zona cuando arrastran archivo
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.add('dragover');
+            });
+        });
+        
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadZone.addEventListener(eventName, () => {
+                uploadZone.classList.remove('dragover');
+            });
+        });
+        
+        // Manejar archivo soltado
+        uploadZone.addEventListener('drop', (e) => {
+            const archivo = e.dataTransfer.files[0];
+            // dataTransfer.files = archivos arrastrados
+            
+            if (archivo) {
+                // Simular que se seleccionó en el input
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(archivo);
+                document.getElementById('fileInput').files = dataTransfer.files;
+                
+                // Mostrar nombre
+                document.getElementById('archivoSeleccionado').classList.remove('hidden');
+                document.getElementById('nombreArchivo').textContent = archivo.name;
+            }
+        });
+        
+        /*
+        ========================================================================
+        INICIALIZACIÓN
+        Código que se ejecuta cuando carga la página
+        ========================================================================
+        */
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            // DOMContentLoaded = cuando el HTML terminó de cargar
+            
+            console.log('🎓 LVS cargado correctamente');
+            // console.log = imprimir mensaje en la consola del navegador
+            // (Abre las DevTools con F12 para verlo)
+            
+            console.log('Para ver este código con explicaciones, abre el archivo HTML');
+        });
+    </script>
+</body>
+</html>
